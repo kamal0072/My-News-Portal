@@ -5,12 +5,21 @@ from news.models import Headline
 
 requests.packages.urllib3.disable_warnings()
 
+from django.contrib.auth.forms import UserCreationForm
+def admin_login(request):
+	form=UserCreationForm()
+	return render(request,'news/login.html',{'fm':form})
+
+
+import datetime
 def news_list(request):
-	headlines = Headline.objects.all()[::-1]
-	context = {
-		'object_list': headlines,
-	}
-	return render(request, "news/home.html", context)
+		dt=datetime.datetime(2021,12,3)
+		headlines = Headline.objects.all()[::-1]
+		context = {
+			'object_list': headlines,
+			'dt':dt,
+		}
+		return render(request, "news/home.html", context)
 
 def scrape(request):
 	session = requests.Session()
